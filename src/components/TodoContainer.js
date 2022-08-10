@@ -37,12 +37,21 @@ class TodoContainer extends React.Component {
     }));
   }
 
+  delTodo = id => {
+    this.setState({
+      todo: [
+        ...this.state.todo.filter( doit => {
+          return doit.id !== id;
+        })
+      ]
+    });
+  };
   render() {
     return (
       
       <div>
         <Header />
-        <TodosList todos={this.state.todo} handleChangeProps={this.handleChange}/>
+        <TodosList todos={this.state.todo} handleChangeProps={this.handleChange} delTodoProps={this.delTodo}/>
       </div>
     )
   }
