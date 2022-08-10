@@ -1,24 +1,27 @@
 import React from "react";
 import TodosList from "./TodoList";
 import Header from "./Header";
+import InputTodo from "./InputTodo";
+import { v4 as uuidv4 } from "uuid";
+import '../App.css'
 
 class TodoContainer extends React.Component {
-  state= {
-    todo :[ 
+  state = {
+    todo: [
       {
-        id:1,
+        id: uuidv4(),
         title: "setup dev component",
         completed: true
       },
       {
-        id:2,
+        id: uuidv4(),
         title: "develop website",
-        completed:false
+        completed: false
       },
       {
-        id:3,
+        id: uuidv4(),
         title: "finish project",
-        completed:false
+        completed: false
       }
     ]
   };
@@ -30,7 +33,7 @@ class TodoContainer extends React.Component {
             ...doit,
             completed: !doit.completed,
           }
-          
+
         }
         return doit;
       })
@@ -40,18 +43,32 @@ class TodoContainer extends React.Component {
   delTodo = id => {
     this.setState({
       todo: [
-        ...this.state.todo.filter( doit => {
+        ...this.state.todo.filter(doit => {
           return doit.id !== id;
         })
       ]
     });
   };
+
+  addTodoItem = item => {
+    const newTodo = {
+      id: uuidv4(),
+      title: item,
+      completed: false
+    };
+    this.setState({
+      todo: [...this.state.todo, newTodo]
+    });
+  }
   render() {
     return (
-      
-      <div>
-        <Header />
-        <TodosList todos={this.state.todo} handleChangeProps={this.handleChange} delTodoProps={this.delTodo}/>
+
+      <div className="container">
+        <div className="inner">
+          <Header />
+          <InputTodo addTodoItemProps={this.addTodoItem} />
+          <TodosList todos={this.state.todo} handleChangeProps={this.handleChange} delTodoProps={this.delTodo} />
+        </div>
       </div>
     )
   }
