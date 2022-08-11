@@ -7,23 +7,7 @@ import '../App.css'
 
 class TodoContainer extends React.Component {
   state = {
-    todo: [
-      {
-        id: uuidv4(),
-        title: "setup dev component",
-        completed: true
-      },
-      {
-        id: uuidv4(),
-        title: "develop website",
-        completed: false
-      },
-      {
-        id: uuidv4(),
-        title: "finish project",
-        completed: false
-      }
-    ]
+    todo: []
   };
   handleChange = (id) => {
     this.setState(prevState => ({
@@ -69,6 +53,26 @@ class TodoContainer extends React.Component {
         return doit
       }),
     })
+  }
+  // componentDidMount() {
+  //   fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ todo: data }));
+  // }
+  componentDidUpdate(prevState,prevProps) {
+    if(prevState.todo !== this.state.todo) {
+      const temp = JSON.stringify(this.state.todo);
+      localStorage.setItem("todos", temp);
+    }
+  }
+  componentDidMount() {
+    const temp = localStorage.getItem("todos")
+    const loadedTodos = JSON.parse(temp)
+    if (loadedTodos) {
+      this.setState({
+        todos: loadedTodos
+      })
+    }
   }
   render() {
     return (
