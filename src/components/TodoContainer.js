@@ -60,6 +60,16 @@ class TodoContainer extends React.Component {
       todo: [...this.state.todo, newTodo]
     });
   }
+  setUpdate = (updatedTitle, id) => {
+    this.setState({
+      todo: this.state.todo.map(doit => {
+        if (doit.id === id) {
+          doit.title = updatedTitle
+        }
+        return doit
+      }),
+    })
+  }
   render() {
     return (
 
@@ -67,7 +77,7 @@ class TodoContainer extends React.Component {
         <div className="inner">
           <Header />
           <InputTodo addTodoItemProps={this.addTodoItem} />
-          <TodosList todos={this.state.todo} handleChangeProps={this.handleChange} delTodoProps={this.delTodo} />
+          <TodosList todos={this.state.todo} handleChangeProps={this.handleChange} delTodoProps={this.delTodo} setUpdate={this.setUpdate}/>
         </div>
       </div>
     )
