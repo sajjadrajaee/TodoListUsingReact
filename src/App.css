@@ -92,3 +92,7 @@ body {
   padding: 10px;
   border: 1px solid #dfdfdf;
 }
+
+.trash:hover {
+  color: red;
+}
